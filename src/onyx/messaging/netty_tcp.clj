@@ -373,7 +373,7 @@
       ;; so we should check if it's established now before trying to reconnect
       :connected (let [channel-val ^Channel @channel] 
                    (if (established? channel-val)
-                     (.writeAndFlush channel-val buf (.voidPromise channel-val))
+                     (.sync ^ChannelFuture (.writeAndFlush channel-val buf (.voidPromise channel-val)))
                      (reset-connection connection)))))
 
   (write [connection buf]
